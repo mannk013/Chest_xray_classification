@@ -1,0 +1,109 @@
+# 🫁 Chest X-Ray Pneumonia Classification
+
+### Convolutional Neural Network for Medical Image Classification
+**Author:** Michał Mańkowski
+**Dataset:** Chest X-Ray Images (Pneumonia) — Kaggle
+**Stack:** Python, TensorFlow, Keras, Scikit-learn, Matplotlib
+
+---
+
+## 📌 Project Overview
+This project uses a **Convolutional Neural Network (CNN)** to classify
+chest X-ray images as either NORMAL or PNEUMONIA.
+The model was trained on 5,216 images and tested on 624 images.
+
+---
+
+## 📊 Results
+
+| Metric | Value |
+|--------|-------|
+| **Test Accuracy** | 82.21% |
+| **Pneumonia Recall** | 0.78 |
+| **Normal Recall** | 0.23 |
+
+---
+
+## ⚠️ Key Challenge — Class Imbalance
+- **74% PNEUMONIA** vs **26% NORMAL** in training data
+- Model is biased toward predicting Pneumonia
+- In medical context **Recall > Accuracy** — missing a sick
+  patient is more dangerous than a false alarm
+
+---
+
+## 🏗️ CNN Architecture
+```
+Input (150x150x3)
+    → Conv2D(32) + MaxPooling
+    → Conv2D(64) + MaxPooling
+    → Conv2D(128) + MaxPooling
+    → Flatten
+    → Dense(512) + Dropout(0.5)
+    → Dense(1) sigmoid → NORMAL / PNEUMONIA
+Total parameters: 19,034,177
+```
+
+---
+
+## 🗺️ OSEMN Framework
+
+### 🔵 O — Obtain
+- Downloaded Chest X-Ray dataset from Kaggle
+- 5,216 training images | 624 test images | 16 validation images
+
+### 🧹 S — Scrub
+- Normalized pixel values to **0-1** range
+- Applied **data augmentation**: rotation, zoom, horizontal flip
+- Computed **class weights** to handle imbalance
+
+### 🔍 E — Explore
+- Visualized sample NORMAL vs PNEUMONIA X-rays
+- Identified severe class imbalance (74% vs 26%)
+
+### 🤖 M — Model
+- Built 3-block CNN with Dropout regularization
+- Used **EarlyStopping** — stopped at epoch 6/20
+- Trained with **class weights** to balance learning
+
+### 📊 N — Interpret
+- Model achieves **82.21% accuracy** on unseen test data
+- Strong **Pneumonia detection (Recall 0.78)**
+- Identified class imbalance as main challenge
+
+---
+
+## 💡 What I Learned
+- How to build and train a **Convolutional Neural Network**
+- How to handle **class imbalance** in medical datasets
+- Why **Recall matters more than Accuracy** in medical AI
+- How **EarlyStopping** prevents overfitting
+
+---
+
+## 🚀 How to Run
+
+```bash
+git clone https://github.com/YOUR_USERNAME/chest_xray_classification
+cd chest_xray_classification
+pip install tensorflow keras matplotlib scikit-learn pillow
+jupyter notebook
+```
+
+Download dataset from:
+👉 https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
+
+---
+
+## 📁 Project Structure
+```
+chest_xray_classification/
+│
+├── data/
+│   └── chest_xray/
+│       ├── train/
+│       ├── test/
+│       └── val/
+├── notebook.ipynb
+└── README.md
+```
